@@ -6,6 +6,7 @@ class User(db.Model):
     document_number = db.Column(db.String(18), unique=True, nullable=False)
     username = db.Column(db.String(16), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    address = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(40), nullable=False)
     created_at = db.Column(db.Date)
     user_cpf = db.relationship("UserCPF", uselist=False, back_populates="user")
