@@ -1,7 +1,7 @@
-from flask import Blueprint, request, jsonify, url_for, redirect, render_template, session
+from flask import Blueprint, render_template
 
 home_bp = Blueprint('home', __name__, template_folder='templates')
 
-@auth_bp.route('/', methods=['GET'])
+@home_bp.route('/', methods=['GET'])
 def home():
-    return render_template('home.html')
+    return render_template('home/home.html')
