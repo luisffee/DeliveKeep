@@ -1,11 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DeliveKeep</title>
+    <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .divHeader {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 60px;
+            background-color: #455A64;
+        }
+        .header {
+            font-family: Julius Sans One;
+            font-size: 32px;
+            font-weight: 400;
+            line-height: 34.91px;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            color: #FFFFFF;
+        }
+        .logYou {
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 187px;
+            background-image: url("https://s3-alpha-sig.figma.com/img/8262/b577/7db1767ddf9be546ef6777b94c343b75?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=X0nMjwoEUo4Ct5j1ihgX2AYPWZS0MOgdMWgFjKIMvmEQuKUH4w6Ur9JlPdXJpxUcIrGvlUAceNIpaw3iLSLBUPb9tGh~jup~nbjrolmQUVi2tC8fQk1sqzON5wK8HqwL-EdvMNgNIGVHaAORY5ffc-YGB3qdS2UJlTjrliuilReRD~kaS3dl5W7z0JFaiL4ao7pszEA6yQ3UP4ggZI7r8JqXwJCUDqoQirla0Ca4cCWcsPeKwb86C07SPd-2wFTN1pYTaU0pX181u6dwAfYb-s2L2TVqyWiljA9fEQRVo7tdcYOau7DaGFyumYP~hgpxbbHo3a98V7SS5e2tZWkxPw__");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .textLogYou {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background-color: #1a273ecc;
+        }
+        .textLogYou p {
+            font-family: Julius Sans One;
+            font-size: 48px;
+            font-weight: 400;
+            line-height: 52.37px;
+            text-align: left;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            color: #FFFFFF;
+            padding: 0;
+            margin: 0;
+        }
+        .info {
+            position: absolute;
+            width: 54px;
+            height: 54px;
+        }
+        .wrap {
+            height: 833px;
+            background-color: #1A273E;
+        }
+        .bottomPassos {
+            width: 435px;
+            height: 440px;
+            background-color: #455A64;
+            border: 15px solid gray;
+            box-sizing: border-box;
+            margin: 50px;
+            margin-top: 75px;
+            display: flex;
+            justify-content: center;
+        }
+        .caixinhas {
+            width: 278px;
+            height: 234px;
+            background-color: #455A64;
+            border: 15px solid gray;
+            box-sizing: border-box;
+            margin-top: 50px;
+        }
+        .caixinhas:first-child {
+            margin-left: 50px;
+        }
+        .caixinhas:last-child {
+            margin-right: 50px;
+        }
+        .caixinhas img {
+            width: 248px;
+            height: 204px;
+            object-fit: cover;
+        }
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .bottomPassos p {
+            font-family: Julius Sans One;
+            font-size: 32px;
+            font-weight: 400;
+            line-height: 52.37px;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            text-align: center;
+            color: #FFFFFF;
+        }
+        .logYou img.info {
+            position: absolute;
+            top: 35%;
+            bottom: 0;
+            width: 54px;
+            height: 54px;
+        }
+        .logYou img.info:first-child{
+            left: 5%;
+        }
+        .logYou img.info:last-child{
+            right: 5%;
+        }
+        .colorCx {
+            position: absolute;
+            width: 248px;
+            height: 204px;
+            background-color: #455A6480;
+        }
+        .cxIcon img {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
-    <h1>teste</h1>
+
+    <div class="divHeader">
+        <p class="header">Seus produtos. sua escolha</p>
+    </div>
+
+    <div class="logYou">
+        <img class="info" src="{{url_for('static', filename='images/info.png')}}">
+        <div class="textLogYou">
+            <p>LOG</p>
+            <p>YOU</p>
+        </div>
+        <img class="info" src="{{url_for('static', filename='images/account_circle.png')}}">
+    </div>
+
+    <div class="wrap">
+        <div class="actions">
+            <div class="caixinhas">
+                <div class="colorCx"></div>
+                <img src="https://s3-alpha-sig.figma.com/img/7024/4be7/5cc1f5229ee0b4c47a77fbcfaff2b08b?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=X5MbgxcpI6c8yPpP9x0YcKzqzNxOIJf~0TgKI4Dxztcdn9V-NuxOG5ok2ZGxIY-65Rj4~VHh6XDUyjvSgIaz4JA3RIfC22klnBwKmMDxRS~NIqaAFC59rsYmI9XWljDOYSHtUrRgH~dWX5QrLAk-p42Z-WnjvtB6KKsCP6M~mTeYViOM4JWq4pjqRsK-F4mf8bO7N9OlRgcZb6y3uSgaHhSQ0yP77bMqsBdXTi2UzQ~50X8i8LggxUtCPVNxkzG5q~wZp9KTXGgrZ2SQucQKzjdfMm3nvrmg9dsipAXRYWQjIgM0h8v6Y6PN6lozSNztTTuH0AG-B4SURijuGeYnlg__">
+            </div>
+            <div class="caixinhas">
+                <div class="colorCx"></div>
+                <img src="https://s3-alpha-sig.figma.com/img/eb10/0156/139c8ad3f68f1f343b659de52908eaf2?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=N6ZSLBdC3xX7VZhVqkyQymPd4pbljHDVCpRwRRTTMMzH80-t4IGKQz9Db-8C~oo2YHVBj97afzGPJ0TuSlBrrWhclq2Ipnms~JOxzwlr0nf2-qjOESgZouc3SBvmlY1U8hir9JNdw44N5m~4piL5ig5qL2fMo-tI6CF0wR7PK1puQPBRc~UCwZ47RExXRH4vv1tUbSFujbid8w4w-2jkMIOFtGrrOula~iOZrjlX94ie2E6asKB7jYBOyv-XRluME2DQ2ZzT5m1FVBdn2EoEDVrqNC0irkHvZkqUgPlyvMm3zQVsRXvInCwtZKrmFj4t6kVSShpTfclLjPw0u3eEGA__">
+            </div>
+            <div class="caixinhas">
+                <div class="colorCx"></div>
+                <img src="https://s3-alpha-sig.figma.com/img/32a3/3a1e/3d3ce438a48b51db2fe4cfa78fffecdd?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KnG8eZjo0EeH1~hjeF0ul8GAchUNFbthSfvcDTstYjLbXcFgtKj3kDG2lmSrW-wvAzohz3PlbxKjmq7WpL8C9dNla7LyT9BCf9LzclHrc9uoZcscrty7mG2vcb3Ehj4hjWXTWtV8E8lmTy-O19TTH77AqdP3YxpH2T4aDariW9~nFpgWb-WmEAPztW6bK~sO875PPYISaYJ2z7ssVmtLk6hQsNuygwqV4rhOuM4KJ7GAh-0tvCZMzPnrqxIRNi4keD-AkpDqQwBQqaxl1B1mGXeBxxDQHXkcJHe3QuMzHiID197hI~hVQcifcxgKuIQ~lDkpcsGg4YQAdNcZwTd4UA__">
+            </div>
+            <div class="caixinhas">
+                <div class="colorCx"></div>
+                <img src="https://s3-alpha-sig.figma.com/img/897b/0abd/c258cd6ecab503636c14bf5e7482f2ff?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=I8i8KNpzqXvB3th9su2-zUsYQ9J0CQc9HreMK6A-kwz903Lr6cM30WxJdb3ZRtGNwPXGheCfd1euxpFJadyif58ToN~jf3A5Pw9GUiGHebcEcUB6BIgvNuaFHNeVp82RGwbOwrBSbFTv6IrHM45XamoLQfLyHWHUz2N2eLsM3ZGazywK1CMiXk3IkXfjWtGwzkfXPSBwyYAITNOOft8v8YeRIOMs-~dnFViySy-IGLNm4zTO483~03C~9h-VW3w6KYivoA5kkMhYy8SHcly-saTOqFOjuqf6NBW5ldxHLfCthwSV6eJTfw1GwfY9nj94L2YFELiLJjWucSY5vnTBNw__">
+            </div>
+            <div class="caixinhas">
+                <div class="colorCx"></div>
+                <img src="https://s3-alpha-sig.figma.com/img/d89f/7d7b/c566f08c164305b90c0c62d0337795a2?Expires=1735516800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=eRwfOWDE45tcCzXrqE-jdvupXt4Yp3BbiOJd-G~Jcwxyr4D-zHI3MYDrDieVgP1SWNvBH09Camc3dm6xqTi7F3422o~X7rdGIMOl6Um5vGDa-1yaIXwfm~c8S5J9hs~NkDdDIy8FsMyfwRbXzupL09rdddGnEunUqlgj-4Bl2fQ8Ks8x-dgcw1G0KG6wMOgzZjm45e0PkdIv5O1j8l5TI9UOBWbtASXQWvLd09g012Ya-ilWuIjTTm4nesIutiZzfoFMvOym9K1kNKA7oAxlFNrrO2ClWj~cuMc1wSkJjfQEXEJCVEyBqa2iEU6aoX~UJUqtSN3K9yKaN2CwDnJw8A__">
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="bottomPassos">
+                <p>Acompanhe os pedidos</p>
+            </div>
+            <div class="bottomPassos">
+                <p>Seu armazem</p>
+            </div>
+            <div class="bottomPassos">
+                <p>Retire onde quiser</p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
