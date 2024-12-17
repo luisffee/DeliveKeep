@@ -153,7 +153,7 @@
             <p>LOG</p>
             <p>YOU</p>
         </div>
-        <img class="info" src="{{url_for('static', filename='images/account_circle.png')}}">
+        <img class="info" id="login" src="{{url_for('static', filename='images/account_circle.png')}}">
     </div>
 
     <div class="wrap">
@@ -194,4 +194,9 @@
     </div>
 
 </body>
+<script>
+    document.getElementById('login').addEventListener('click', function() {
+        window.location.href = '/auth/login';
+    });
+</script>
 </html>
