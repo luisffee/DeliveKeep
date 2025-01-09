@@ -1,0 +1,34 @@
+.divBackGround {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../src/images/truckHeaderHW.jpg');
+    opacity: 0.3;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.bgText {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bgText p {
+    font-family: Julius Sans One;
+    font-size: 64px;
+    font-weight: 400;
+    line-height: 69.82px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin: 0;
+}
+
+.bgText p:first-child {
+    margin-top: 2rem;
+}
