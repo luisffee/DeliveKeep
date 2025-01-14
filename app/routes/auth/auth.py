@@ -84,4 +84,12 @@ def login():
 @auth_bp.route('/userInfo', methods=['GET'])
 @token_required
 def userInfo(current_user):
-    return jsonify({'message': 'Logged in successfully', 'user_name': current_user.name, 'status': '200'}), 200
+    info = request.args.get('info')
+    if not info:
+        return jsonify({'message': 'Info parameter is missing', 'status': '400'}), 400
+    
+    user_info = getattr(current_user, info, None)
+    if user_info is None:
+        return jsonify({'message': 'Invalid info parameter', 'status': '400'}), 400
+    
+    return jsonify({'message': 'Logged in successfully', 'user_info': user_info, 'status': '200'}), 200

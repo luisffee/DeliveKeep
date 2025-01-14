@@ -69,9 +69,11 @@ async function logoutUser() {
   // Optionally, you can redirect the user to the login page
 }
 
-async function getUserInfo() {
+async function getUserInfo(info) {
   try {
-    const response = await axios.get(`${BASE_API}/auth/userInfo`);
+    const response = await axios.get(`${BASE_API}/auth/userInfo`, {
+      params: { info }
+    });
     console.log('User Info:', response.data);
     return response.data;
   } catch (error) {
