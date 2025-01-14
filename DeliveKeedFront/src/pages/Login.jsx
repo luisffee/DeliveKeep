@@ -2,10 +2,29 @@ import './Login.css';
 import Header from '../components/Header';
 import BackGround from '../components/BackGround';
 import { Helmet } from 'react-helmet';
+import { loginUser } from '../controllers/user-controllers';
 
 const Login = () => {
   const handleRegisterClick = () => {
-    window.location.href = '/register';
+    //window.location.href = '/register';
+    navigate('/register')
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Previne o comportamento padrão do formulário
+    try {
+      const response = await loginUser({email: e.target.email.value, password: e.target.password.value});
+
+      if(response.status === 200){
+        navigate('/')
+      } else {
+        alert('Erro no login!')
+      }
+
+    } catch (error) {
+      console.log("Erro no login:", error);
+      alert("Falha ao fazer login. Verifique suas credenciais.");
+    }
   };
 
   return (
@@ -18,22 +37,22 @@ const Login = () => {
         <BackGround />
         <div className="wrapper">
             <div className="container">
-                <form action="/auth/login" method="POST">
+                <form onSubmit={handleSubmit}>
                     <div className="form-input">
-                        <p>E-mail ou CPF</p>
-                        <input type="text" name="username" required />
+                        <p>E-mail</p>
+                        <input type="email" name="email" id="email" placeholder="E-mail" required />
                         <p>Senha</p>
-                        <input type="password" name="password" required />
+                        <input type="password" name="password" id="password" placeholder="Password" required />
+                    </div>
+                    <div className="submit-button">
+                        <input type="submit" value="Login" />
+                        <input
+                        type="button"
+                        value="Cadastrar"
+                        onClick={handleRegisterClick}
+                        />
                     </div>
                 </form>
-                <div className="submit-button">
-                    <input type="submit" value="Login" />
-                    <input
-                    type="button"
-                    value="Cadastrar"
-                    onClick={handleRegisterClick}
-                    />
-                </div>
             </div>
         </div>
     </>

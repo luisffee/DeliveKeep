@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import BackGround from '../components/BackGround';
 import { Helmet } from 'react-helmet';
 import { useState } from 'react';
+import { registerUser } from "../controllers/user-controllers";
 
 const Register = () => {
 
@@ -15,6 +16,9 @@ const Register = () => {
             .replace(/(\d{3})(\d{2})$/, '$1-$2'); // Add a dash before the last 2 digits
     };
 
+    const [password1, setPassword1] = useState("");
+    const [password2, setPassword2] = useState("");
+    const [passwordError, setPasswordError] = useState(false);
     const [cpf, setCpf] = useState('');
     const [cep, setCep] = useState('');
     const [address, setAddress] = useState({
@@ -24,6 +28,16 @@ const Register = () => {
         cidade: '',
         bairro: '',
         estado: ''
+    });
+    const [registerInfo, setRegisterInfo] = useState({
+        address: address,
+        name: '',
+        email: '',
+        password1,
+        password2,
+        cpf: cpf,
+        date_of_birth: '',
+        numberContact: '',
     });
 
     const handleCpfChange = (e) => {
@@ -63,6 +77,29 @@ const Register = () => {
         setStep(1);
     };
 
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Impede o comportamento padrão de envio
+
+        // Verifique se as senhas são iguais antes de enviar os dados
+        if (password1 !== password2) {
+        setPasswordError(true);
+        return; // Impede o envio se as senhas não coincidirem
+        }
+    
+        setPasswordError(false); // Limpa o erro se as senhas coincidirem
+    
+        // Chama a função registerUser passando os dados
+        try {
+        const response = await registerUser(registerInfo);
+    
+        // Pode tratar a resposta aqui (ex. redirecionar ou mostrar uma mensagem)
+        console.log('Usuário registrado com sucesso:', response);
+        navigate('/')
+        } catch (error) {
+        console.error('Erro ao registrar usuário:', error);
+        }
+    };
+
     return (
         <>
             <Helmet>
@@ -77,16 +114,20 @@ const Register = () => {
                         <>
                             <div className="register-columns">
                                 <div className='register-column'>
-                                    <input type="text" placeholder="Nome" required />
-                                    <input type="text" placeholder="Número de contato" required />
-                                    <input type="date" placeholder="Data de nascimento" required />
-                                    <input type="password" placeholder="Senha" required />
+                                    <input type="text" placeholder="Nome" value={registerInfo.name} onChange={(e) => setRegisterInfo({ ...registerInfo, name: e.target.value })} required />
+                                    <input type="text" placeholder="Número de contato" value={registerInfo.numberContact} onChange={(e) => setRegisterInfo({ ...registerInfo, numberContact: e.target.value })} required />
+                                    <input type="date" placeholder="Data de nascimento" value={registerInfo.date_of_birth} onChange={(e) => setRegisterInfo({ ...registerInfo, date_of_birth: e.target.value })} required />
+                                    <input type="password" placeholder="Senha" value={password1} onChange={(e) => setPassword1(e.target.value)} required />
                                 </div>
                                 <div className='register-column'>
-                                    <input type="text" placeholder="Sobrenome" required />
-                                    <input type="email" placeholder="E-mail" required />
+                                    <input type="email" placeholder="E-mail" value={registerInfo.email} onChange={(e) => setRegisterInfo({ ...registerInfo, email: e.target.value })} required />
                                     <input type="text" placeholder="CPF" value={cpf} onChange={handleCpfChange} required />
-                                    <input type="password" placeholder="Confirme sua senha" required />
+                                    <input type="password" placeholder="Confirme sua senha" value={password2} onChange={(e) => setPassword2(e.target.value)} required />
+                                    {passwordError && (
+                                    <div style={{ color: "red", fontSize: "0.875em" }}>
+                                        As senhas não coincidem
+                                    </div>
+                                    )}
                                 </div>
                             </div>
                             <button className='registerBtn' onClick={handleNextStep}>Continuar</button>
@@ -109,7 +150,7 @@ const Register = () => {
                             </div>
                             <div className='lastRegBtn'>
                                 <button className='registerBtn' onClick={handlePreviousStep}>Voltar</button>
-                                <button className='registerBtn' >Finalizar</button>
+                                <button className='registerBtn' onClick={handleSubmit}>Finalizar</button>
                             </div>
                         </>
                     )}
