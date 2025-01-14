@@ -1,6 +1,20 @@
 import { BASE_API } from '../resources/api';
 import axios from 'axios';
 
+// Add the interceptor to attach the token to each request
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 // Registrar um novo usuário
 async function registerUser({
     address,
@@ -39,6 +53,9 @@ async function loginUser(email, password) {
       email,
       password,
     });
+    if (response.data.token) {
+      localStorage.setItem('authToken', response.data.token);
+    }
     console.log('Logged in successfully:', response.data);
     return response;
   } catch (error) {
@@ -47,4 +64,20 @@ async function loginUser(email, password) {
   }
 }
 
-export { registerUser, loginUser };
+async function logoutUser() {
+  localStorage.removeItem('authToken');
+  // Optionally, you can redirect the user to the login page
+}
+
+async function getUserInfo() {
+  try {
+    const response = await axios.get(`${BASE_API}/auth/userInfo`);
+    console.log('User Info:', response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Erro ao obter informações do usuário:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+export { registerUser, loginUser, logoutUser, getUserInfo };

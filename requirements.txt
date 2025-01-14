@@ -5,3 +5,4 @@ sqlalchemy-utils
 psycopg2
 python-dotenv
 qrcode
+PyJWT

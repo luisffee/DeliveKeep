@@ -2,15 +2,22 @@ import './Login.css';
 import Header from '../components/Header';
 import BackGround from '../components/BackGround';
 import { Helmet } from 'react-helmet';
-import { loginUser } from '../controllers/user-controllers';
+import { loginUser} from '../controllers/user-controllers';
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      // Optionally, you can verify the token with the backend here
+      navigate('/');
+    }
+  }, [navigate]);
   
   const handleRegisterClick = () => {
-    //window.location.href = '/register';
     navigate('/register')
   };
 

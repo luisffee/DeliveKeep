@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from config import config
 from .db import InitDB
+import os
 
 
 def create_app(app_config='development'):
@@ -9,8 +10,7 @@ def create_app(app_config='development'):
     db =  InitDB(app)
     Cors = CORS(app)
     CORS(app, resources={r'/*': {'origins': '*'}},CORS_SUPPORTS_CREDENTIALS = True)
-    app.config['CORS_HEADERS'] = 'Content-Type'
-    app.secret_key = 'secret'
+    app.secret_key = os.environ.get('SECRET_KEY')
     app.config.from_object(config[app_config])
     app.config['SQLALCHEMY_DATABASE_URI'] = db.engine.url
     db = db.start()
