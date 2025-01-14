@@ -23,6 +23,7 @@ async function registerUser({
         date_of_birth,
         numberContact,
     });
+    console.log('Usuario Registrado!:', response.data);
     return response;
   } catch (error) {
     console.log('Erro ao registrar usuário:', error.response?.data || error.message);
@@ -33,11 +34,13 @@ async function registerUser({
 // Fazer login do usuário
 async function loginUser(email, password) {
   try {
+    console.log('email:', email);
     const response = await axios.post(`${BASE_API}/auth/login`, {
       email,
       password,
     });
-    return console.log('Logged in successfully:', response.data);
+    console.log('Logged in successfully:', response.data);
+    return response;
   } catch (error) {
     console.log('Erro ao fazer login:', error.response?.data || error.message);
     throw error;

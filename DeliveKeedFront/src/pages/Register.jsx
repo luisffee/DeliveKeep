@@ -99,13 +99,16 @@ const Register = () => {
     
         // Chama a função registerUser passando os dados
         try {
-        const response = await registerUser(registerInfo);
+            const response = await registerUser(registerInfo);
+            if(response && response.status === 200){
+                navigate('/')
+            } else {
+                alert('Erro ao registrar usuário!')
+            }
     
-        // Pode tratar a resposta aqui (ex. redirecionar ou mostrar uma mensagem)
-        console.log('Usuário registrado com sucesso:', response);
-        navigate('/')
         } catch (error) {
-        console.error('Erro ao registrar usuário:', error);
+            console.error('Erro ao registrar usuário:', error);
+            alert("Erro ao registrar usuário: Verifique os dados e tente novamente.");
         }
     };
 

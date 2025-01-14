@@ -24,13 +24,13 @@ def registerUser():
     # Validar entrada
     user = User.query.filter_by(email=email).first()
     if user:
-        return jsonify({'message': 'User already exists'})
+        return jsonify({'message': 'User already exists', 'status': '401'}), 401
     elif len(email) < 4:
-        return jsonify({'message': 'Email must be greater than 3 characters.'})
+        return jsonify({'message': 'Email must be greater than 3 characters.', 'status': '401'}), 401
     elif len(name) < 2:
-        return jsonify({'message': 'Name must be greater than 1 character.'})
+        return jsonify({'message': 'Name must be greater than 1 character.', 'status': '401'}), 401
     elif password1 != password2:
-        return jsonify({'message': 'Passwords don\'t match.'})
+        return jsonify({'message': 'Passwords don\'t match.', 'status': '401'}), 401
 
     # Criar novo usuário
     new_user = User(name=name, email=email, password=password1, cpf=cpf, address=address, date_of_birth=date_of_birth, numberContact=numberContact)
@@ -40,21 +40,20 @@ def registerUser():
     # Commit das mudanças
     db.session.commit()
     
-    return jsonify({'message': 'User created successfully'})
+    return jsonify({'message': 'User created successfully', 'status': '200'}), 200
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-        
-        user = User.query.filter_by(email=email).first()
-        
-        if user and check_password_hash(user.password, password):
-            session['user_id'] = user.id
-            return jsonify({'message': 'Logged in successfully'})
-        else:
-            return jsonify({'message': 'Invalid email or password'}), 401
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    
+    user = User.query.filter_by(email=email).first()
+    if user and user.password == password:
+        session['user_id'] = user.id
+        return jsonify({'message': 'Logged in successfully', 'status': '200'}), 200
+    else:
+        return jsonify({'message': 'Invalid email or password', 'status': '401'}), 401
 
 @auth_bp.route('/logout')
 def logout():

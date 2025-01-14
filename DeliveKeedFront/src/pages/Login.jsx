@@ -4,6 +4,7 @@ import BackGround from '../components/BackGround';
 import { Helmet } from 'react-helmet';
 import { loginUser } from '../controllers/user-controllers';
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
 
 const Login = () => {
   const navigate = useNavigate()
@@ -13,12 +14,14 @@ const Login = () => {
     navigate('/register')
   };
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Previne o comportamento padrão do formulário
     try {
-      const response = await loginUser({email: e.target.email.value, password: e.target.password.value});
-
-      if(response.status === 200){
+      const response = await loginUser(email, password);
+      if(response && response.status === 200){
         navigate('/')
       } else {
         alert('Erro no login!')
@@ -43,9 +46,9 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-input">
                         <p>E-mail</p>
-                        <input type="email" name="email" id="email" placeholder="E-mail" required />
+                        <input type="email" name="email" id="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
                         <p>Senha</p>
-                        <input type="password" name="password" id="password" placeholder="Password" required />
+                        <input type="password" name="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                     <div className="submit-button">
                         <input type="submit" value="Login" />
