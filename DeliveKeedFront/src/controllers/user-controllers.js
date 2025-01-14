@@ -37,7 +37,7 @@ async function loginUser(email, password) {
       email,
       password,
     });
-    return response;
+    return console.log('Logged in successfully:', response.data);
   } catch (error) {
     console.log('Erro ao fazer login:', error.response?.data || error.message);
     throw error;

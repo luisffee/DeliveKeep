@@ -3,8 +3,11 @@ import Header from '../components/Header';
 import BackGround from '../components/BackGround';
 import { Helmet } from 'react-helmet';
 import { loginUser } from '../controllers/user-controllers';
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate()
+  
   const handleRegisterClick = () => {
     //window.location.href = '/register';
     navigate('/register')

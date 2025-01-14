@@ -4,8 +4,11 @@ import BackGround from '../components/BackGround';
 import { Helmet } from 'react-helmet';
 import { useState } from 'react';
 import { registerUser } from "../controllers/user-controllers";
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
+
+    const navigate = useNavigate()
 
     const formatCPF = (value) => {
         return value
@@ -22,23 +25,16 @@ const Register = () => {
     const [cpf, setCpf] = useState('');
     const [cep, setCep] = useState('');
     const [address, setAddress] = useState({
-        endereco: '',
         rua: '',
         complemento: '',
         cidade: '',
         bairro: '',
-        estado: ''
+        estado: '',
     });
-    const [registerInfo, setRegisterInfo] = useState({
-        address: address,
-        name: '',
-        email: '',
-        password1,
-        password2,
-        cpf: cpf,
-        date_of_birth: '',
-        numberContact: '',
-    });
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
+    const [numberContact, setNumberContact] = useState('');
 
     const handleCpfChange = (e) => {
         setCpf(formatCPF(e.target.value));
@@ -87,6 +83,19 @@ const Register = () => {
         }
     
         setPasswordError(false); // Limpa o erro se as senhas coincidirem
+
+        const formattedAddress = `${address.rua}, ${address.complemento}, ${address.cidade}, ${address.bairro}, ${address.estado}`;
+
+        const registerInfo = {
+            address: formattedAddress,
+            name,
+            email,
+            password1,
+            password2,
+            cpf,
+            date_of_birth: dateOfBirth,
+            numberContact
+        };
     
         // Chama a função registerUser passando os dados
         try {
@@ -114,13 +123,13 @@ const Register = () => {
                         <>
                             <div className="register-columns">
                                 <div className='register-column'>
-                                    <input type="text" placeholder="Nome" value={registerInfo.name} onChange={(e) => setRegisterInfo({ ...registerInfo, name: e.target.value })} required />
-                                    <input type="text" placeholder="Número de contato" value={registerInfo.numberContact} onChange={(e) => setRegisterInfo({ ...registerInfo, numberContact: e.target.value })} required />
-                                    <input type="date" placeholder="Data de nascimento" value={registerInfo.date_of_birth} onChange={(e) => setRegisterInfo({ ...registerInfo, date_of_birth: e.target.value })} required />
+                                    <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} required />
+                                    <input type="text" placeholder="Número de contato" value={numberContact} onChange={(e) => setNumberContact(e.target.value)} required />
+                                    <input type="date" placeholder="Data de nascimento" value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
                                     <input type="password" placeholder="Senha" value={password1} onChange={(e) => setPassword1(e.target.value)} required />
                                 </div>
                                 <div className='register-column'>
-                                    <input type="email" placeholder="E-mail" value={registerInfo.email} onChange={(e) => setRegisterInfo({ ...registerInfo, email: e.target.value })} required />
+                                    <input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
                                     <input type="text" placeholder="CPF" value={cpf} onChange={handleCpfChange} required />
                                     <input type="password" placeholder="Confirme sua senha" value={password2} onChange={(e) => setPassword2(e.target.value)} required />
                                     {passwordError && (
