@@ -3,7 +3,7 @@ from werkzeug.security import check_password_hash
 from .models import User, UserCPF, UserCNPJ
 from ...db import db
 
-auth_bp = Blueprint('auth', __name__, template_folder='templates')
+auth_bp = Blueprint('auth', __name__)
 
 def is_cpf(document):
     # Add validation logic for CPF (typically 11 digits)

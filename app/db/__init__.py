@@ -2,7 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import database_exists, create_database
 
 db = SQLAlchemy()
-engine = db.create_engine(f'postgresql://postgres:postgres@localhost:5432/delivekeep')
+engine = db.create_engine(f'postgresql://postgres:root@localhost:5432/delivekeep')
 
 class InitDB():
     def __init__(self, app):

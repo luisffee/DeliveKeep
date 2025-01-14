@@ -4,7 +4,7 @@ from ...db import db
 import qrcode
 import io
 
-delivery_bp = Blueprint('delivery', __name__, template_folder='templates')
+delivery_bp = Blueprint('delivery', __name__)
 
 @delivery_bp.route('/getDeliveries', methods=['GET'])
 def getDeliveries():

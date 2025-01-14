@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, url_for, redirect, render_templat
 from ..auth.models import User
 from ...db import db
 
-profile_bp = Blueprint('profile', __name__, template_folder='templates')
+profile_bp = Blueprint('profile', __name__)
 
 @profile_bp.route('/profile', methods=['GET'])
 def profile():
