@@ -1,0 +1,18 @@
+.divHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 3.75rem;
+    background-color: #455A64;
+}
+.header {
+    font-family: Julius Sans One;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 34.91px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #FFFFFF;
+}

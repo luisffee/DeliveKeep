@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+
+.wrapperReg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.21rem;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+}
+
+.containerReg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 55rem;
+    height: 37rem;
+    margin-top: 10rem;
+    background-color: #374044d5;
+    border: 0.625rem solid #455a64;
+    border-radius: 0.25rem;
+}
+
+.register-columns {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.register-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.register-column:first-child {
+    margin-right: 3rem;
+}
+
+.register-column input {
+    width: 15rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="date"] {
+    background-image: none;
+    padding-left: 2.5rem;
+    /* Verificar alterações em Login.css */
+}
+
+.registerBtn {
+    display: block;
+    margin: 1.25rem auto;
+    width: 12.5rem;
+    height: 3.125rem;
+    border-radius: 1.25rem;
+    border: none;
+    background-color: #FF6F00;
+}
+
+.lastRegBtn {
+    display: flex;
+    gap: 9rem;
+}

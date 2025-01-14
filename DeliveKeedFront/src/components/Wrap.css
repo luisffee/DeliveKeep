@@ -1,0 +1,92 @@
+.wrap {
+    height: 52.063rem;
+    background-color: #1A273E;
+}
+
+.bottomPassos {
+    width: 27.188rem;
+    height: 27.5rem;
+    background-color: #455A64;
+    border: 1rem solid gray;
+    box-sizing: border-box;
+    margin: 3.125rem;
+    margin-top: 4.688rem;
+    display: flex;
+    justify-content: center;
+}
+
+.caixinhas {
+    width: 278px;
+    height: 234px;
+    background-color: #455A64;
+    border: 1rem solid gray;
+    box-sizing: border-box;
+    margin-top: 3.125rem;
+}
+
+.caixinhas:first-child {
+    margin-left: 3.125rem;
+}
+
+.caixinhas:last-child {
+    margin-right: 3.125rem;
+}
+
+.caixinhas img:first-child {
+    width: 15.5rem;
+    height: 12.75rem;
+    object-fit: cover;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+}
+
+.bottomPassos p {
+    font-family: Julius Sans One;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 52.37px;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.logYou img.info {
+    position: absolute;
+    top: 35%;
+    bottom: 0;
+    width: 3.375rem;
+    height: 3.375rem;
+}
+
+.logYou img.info:first-child {
+    left: 5%;
+}
+
+.logYou img.info:last-child {
+    right: 5%;
+}
+
+.colorCx {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 15.5rem;
+    height: 12.75rem;
+    background-color: #455A6480;
+}
+
+.colorCx img {
+    position: absolute;
+}
+
+.cxIcon {
+    width: 6.25rem;
+    height: 6.25rem;
+}
