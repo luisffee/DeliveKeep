@@ -38,3 +38,18 @@
   width: 3.375rem;
   height: 3.375rem;
 }
+
+.userGreeting {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  margin-left: auto;
+  left: 91%;
+  color: #ffffff;
+}
+
+.userGreeting img {
+  margin-right: 0.5rem;
+  width: 3.375rem;
+  height: 3.375rem;
+}

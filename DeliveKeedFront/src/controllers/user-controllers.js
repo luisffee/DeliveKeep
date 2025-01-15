@@ -55,6 +55,7 @@ async function loginUser(email, password) {
     });
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('userInfo', response.data.user_name);
     }
     console.log('Logged in successfully:', response.data);
     return response;

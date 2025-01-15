@@ -77,7 +77,7 @@ def login():
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
         }, os.environ.get('SECRET_KEY'), algorithm='HS256')
         
-        return jsonify({'message': 'Logged in successfully', 'token': token, 'status': '200'}), 200
+        return jsonify({'message': 'Logged in successfully', 'token': token, 'user_name': user.name, 'status': '200'}), 200
     else:
         return jsonify({'message': 'Invalid email or password', 'status': '401'}), 401
 
