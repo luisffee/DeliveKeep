@@ -19,6 +19,8 @@ const Register = () => {
             .replace(/(\d{3})(\d{2})$/, '$1-$2'); // Add a dash before the last 2 digits
     };
 
+    const [Observation, setObservation] = useState('');
+    const [number, setNumber] = useState('');
     const [password1, setPassword1] = useState("");
     const [password2, setPassword2] = useState("");
     const [passwordError, setPasswordError] = useState(false);
@@ -151,11 +153,11 @@ const Register = () => {
                                     <input type="text" placeholder="CEP" value={cep} onChange={handleCepChange} required />
                                     <input type="text" placeholder="Complemento" value={address.complemento} onChange={(e) => setAddress({ ...address, complemento: e.target.value })} required />
                                     <input type="text" placeholder="Cidade" value={address.cidade} onChange={(e) => setAddress({ ...address, cidade: e.target.value })} required />
-                                    <input type="text" placeholder="Observação" />
+                                    <input type="text" placeholder="Observação" value={Observation} onChange={() => setObservation()} />
                                 </div>
                                 <div className='register-column'>
                                     <input type="text" placeholder="Rua" value={address.rua} onChange={(e) => setAddress({ ...address, rua: e.target.value })} required />
-                                    <input type="text" placeholder="Número" required />
+                                    <input type="text" placeholder="Número" value={number} onChange={() => setNumber} required />
                                     <input type="text" placeholder="Bairro" value={address.bairro} onChange={(e) => setAddress({ ...address, bairro: e.target.value })} required />
                                     <input type="text" placeholder="Estado" value={address.estado} onChange={(e) => setAddress({ ...address, estado: e.target.value })} required />
                                 </div>

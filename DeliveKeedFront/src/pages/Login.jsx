@@ -52,9 +52,7 @@ const Login = () => {
             <div className="container">
                 <form onSubmit={handleSubmit}>
                     <div className="form-input">
-                        <p>E-mail</p>
                         <input type="email" name="email" id="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                        <p>Senha</p>
                         <input type="password" name="password" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                     <div className="submit-button">
