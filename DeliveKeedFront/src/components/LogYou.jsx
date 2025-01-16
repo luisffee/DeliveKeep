@@ -17,10 +17,18 @@ const LogYou = () => {
     window.location.href = '/login';
   };
 
+  const handleInfoClick = () => {
+    window.location.href = '/info';
+  };
+
+  const handleHomeClick = () => {
+    window.location.href = '/';
+  };
+
   return (
     <div className="logYou">
-      <img className='info' src={infoIcon} alt="Info Icon" />
-      <div className="textLogYou">
+      <img className='info' src={infoIcon} alt="Info Icon" onClick={handleInfoClick} />
+      <div className="textLogYou" onClick={handleHomeClick}>
         <p>Delive</p>
         <p>Keep</p>
       </div>
