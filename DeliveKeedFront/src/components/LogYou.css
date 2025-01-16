@@ -37,6 +37,15 @@
   position: absolute;
   width: 3.375rem;
   height: 3.375rem;
+  cursor: pointer;
+}
+
+.hbMenu {
+  position: absolute;
+  width: 3.375rem;
+  height: 3.375rem;
+  margin-left: 3rem;
+  cursor: pointer;
 }
 
 .userGreeting {

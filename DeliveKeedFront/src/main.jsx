@@ -6,6 +6,7 @@ import App from './App.jsx'
 import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import Info from './pages/Info.jsx'
+import Endereco from './pages/Endereco.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/info" element={<Info />} />
+        <Route path="/endereco" element={<Endereco />} />
       </Routes>
     </Router>
   </StrictMode>,
