@@ -75,7 +75,6 @@ const LogYou = () => {
           <li style={{ padding: "8px 12px", cursor: "pointer" }}>Carteira</li>
           <li style={{ padding: "8px 12px", cursor: "pointer" }}>Meus Produtos</li>
           <li style={{ padding: "8px 12px", cursor: "pointer" }}>Atendimentos</li>
-          <li style={{ padding: "8px 12px", cursor: "pointer" }}>Minha Assinatura</li>
         </ul>
       )}
       <div className="textLogYou" onClick={handleHomeClick}>
