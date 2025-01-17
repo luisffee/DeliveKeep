@@ -7,6 +7,7 @@ import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import Info from './pages/Info.jsx'
 import Endereco from './pages/Endereco.jsx'
+import Pagamento from './pages/Pagamento.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/register" element={<Register />} />
         <Route path="/info" element={<Info />} />
         <Route path="/endereco" element={<Endereco />} />
+        <Route path="/pagamento" element={<Pagamento />} />
       </Routes>
     </Router>
   </StrictMode>,
