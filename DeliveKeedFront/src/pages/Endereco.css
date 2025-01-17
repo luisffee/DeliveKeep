@@ -20,21 +20,26 @@ body, html {
 
 .big-box {
     display: flex;
-    justify-content: space-between;
-    height: 650px;
+    flex-wrap: wrap; /* Permite que as caixas "quebrem" para a próxima linha */
+    justify-content: space-around; /* Espaçamento uniforme entre as caixas */
+    align-content: flex-start; /* Alinha as linhas no topo do container */
+    height: auto; /* Deixe a altura dinâmica para acomodar as linhas */
     width: 1200px;
+    min-height: 650px;
     background-color: #455a6450;
     border: #455A64 solid 15px;
+    padding: 1rem; /* Adiciona espaçamento interno */
+    box-sizing: border-box; /* Inclui o padding no tamanho total */
 }
 
 .add-endereco {
     display: flex;
     flex-direction: column;
-    width: 450px;
+    width: 45%; /* Define a largura de cada caixa como metade do container */
     height: 180px;
     border: #FF6F00 solid 2px;
     border-radius: 10px;
-    margin: 1rem 2rem;
+    margin: 1rem 0; /* Espaço vertical entre as caixas */
 }
 
 .add-endereco p:first-child {

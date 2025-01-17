@@ -4,6 +4,7 @@ import LogYou from '../components/LogYou';
 import { Helmet } from 'react-helmet';
 import './Endereco.css';
 import addEnderecoBtn from '../images/addAdress.svg';
+import API_GMAPS_KEY from './api';
 
 const FURG_COORDS = { lat: -32.066157, lng: -52.175553 }; // Coordenadas da FURG
 
@@ -51,8 +52,8 @@ function Endereco() {
                 const geocodingResponse = await fetch(
                     `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
                         fullAddress
-                    )}&key=AIzaSyB_7wOkDLlyLaBt-APXxGkkEYZGri7WUkc`
-                );
+                    )}&key=${API_GMAPS_KEY}`
+                );                
                 const geocodingData = await geocodingResponse.json();
                 if (geocodingData.results.length > 0) {
                     const { lat, lng } = geocodingData.results[0].geometry.location;
