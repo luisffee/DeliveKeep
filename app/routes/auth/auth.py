@@ -6,6 +6,8 @@ from ...db import db
 import jwt
 import datetime
 import os
+import requests
+from bs4 import BeautifulSoup
 
 
 auth_bp = Blueprint('auth', __name__)
@@ -93,3 +95,30 @@ def userInfo(current_user):
         return jsonify({'message': 'Invalid info parameter', 'status': '400'}), 400
     
     return jsonify({'message': 'Logged in successfully', 'user_info': user_info, 'status': '200'}), 200
+
+
+# Função para fazer web scraping e pegar o preço da gasolina
+def fetch_gasoline_price():
+    try:
+        response = requests.get('https://precos.petrobras.com.br/sele%C3%A7%C3%A3o-de-estados-gasolina')
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        gasoline_price_element = soup.find(id='telafinal-precofinal')
+
+        if gasoline_price_element:
+            gasoline_price = gasoline_price_element.get_text(strip=True)
+            return gasoline_price
+        else:
+            return None
+    except requests.RequestException as e:
+        print(f'Erro ao buscar o preço da gasolina: {e}')
+        return None
+
+# Nova rota para enviar o valor coletado para o front-end
+@auth_bp.route('/gasolinePrice', methods=['GET'])
+def get_gasoline_price():
+    gasoline_price = fetch_gasoline_price()
+    if gasoline_price:
+        return jsonify({'message': 'Gasoline price fetched successfully', 'gasoline_price': gasoline_price, 'status': '200'}), 200
+    else:
+        return jsonify({'message': 'Failed to fetch gasoline price', 'status': '500'}), 500

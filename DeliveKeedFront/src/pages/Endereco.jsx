@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import LogYou from '../components/LogYou';
 import { Helmet } from 'react-helmet';
@@ -8,6 +8,7 @@ import addEnderecoBtn from '../images/addAdress.svg';
 const FURG_COORDS = { lat: -32.066157, lng: -52.175553 }; // Coordenadas da FURG
 
 function Endereco() {
+    const [gasolinePrice, setGasolinePrice] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [cep, setCep] = useState('');
     const [enderecos, setEnderecos] = useState([]);
@@ -22,6 +23,24 @@ function Endereco() {
         cep: '',
     });
 
+    useEffect(() => {
+        const fetchGasolinePrice = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/auth/gasolinePrice');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                const formattedPrice = data.gasoline_price.replace(',', '.');
+                setGasolinePrice(formattedPrice); // valor do preço da gasolina
+            } catch (error) {
+                console.error('Erro ao fazer a requisição:', error);
+            }
+        };
+
+        fetchGasolinePrice();
+    }, []);
+
     const fetchCoordinates = async (cep) => {
         try {
             const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
@@ -32,7 +51,7 @@ function Endereco() {
                 const geocodingResponse = await fetch(
                     `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
                         fullAddress
-                    )}&key=YOUR_GOOGLE_MAPS_API_KEY`
+                    )}&key=AIzaSyB_7wOkDLlyLaBt-APXxGkkEYZGri7WUkc`
                 );
                 const geocodingData = await geocodingResponse.json();
                 if (geocodingData.results.length > 0) {
@@ -140,7 +159,7 @@ function Endereco() {
                             <p>Bairro: {endereco.bairro}</p>
                             <p>Número: {endereco.number}</p>
                             <p>CEP: {endereco.cep}</p>
-                            <p>Distância até a FURG (x2): {endereco.distance} km</p>
+                            <p>Valor: R${(gasolinePrice / 10.5 * endereco.distance + 15).toFixed(2)}</p> {/* Cálculo do valor: preço da gasolina, dividido por km/l de uma van convencional, multiplicado pela distancia até o endereço, somando taxa de serviço */}
                         </div>
                     ))}
                 </div>
@@ -150,10 +169,10 @@ function Endereco() {
                 <div className='modal'>
                     <div className='modal-content'>
                         <h2>Adicionar Endereço</h2>
-                        <input type="text" placeholder="CEP" value={cep} onChange={handleCepChange} required />
-                        <input type="text" placeholder="Rua" value={address.rua} readOnly />
-                        <input type="text" placeholder="Bairro" value={address.bairro} readOnly />
-                        <input type="text" placeholder="Número" value={number} onChange={(e) => setNumber(e.target.value)} required />
+                        <input type="number" placeholder="CEP" value={cep} onChange={handleCepChange} required />
+                        <input type="text" placeholder="Rua" value={address.rua} onChange={(e) => setAddress({ ...address, rua: e.target.value })} required />
+                        <input type="text" placeholder="Bairro" value={address.bairro} onChange={(e) => setAddress({ ...address, rua: e.target.value })} required />
+                        <input type="number" placeholder="Número" value={number} onChange={(e) => setNumber(e.target.value)} required />
                         <input type="text" placeholder="Título" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
                         <button onClick={handleSaveEndereco}>Salvar</button>
                         <button onClick={() => setShowModal(false)}>Cancelar</button>
