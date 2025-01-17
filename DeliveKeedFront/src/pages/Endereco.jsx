@@ -138,6 +138,11 @@ function Endereco() {
         }
     };
 
+    const handleRemoveEndereco = (index) => {
+        const updatedEnderecos = enderecos.filter((_, i) => i !== index);
+        setEnderecos(updatedEnderecos);
+    };    
+
     return (
         <div id="endereco-page">
             <Helmet>
@@ -161,6 +166,7 @@ function Endereco() {
                             <p>Número: {endereco.number}</p>
                             <p>CEP: {endereco.cep}</p>
                             <p>Valor: R${(gasolinePrice / 10.5 * endereco.distance + 15).toFixed(2)}</p> {/* Cálculo do valor: preço da gasolina, dividido por km/l de uma van convencional, multiplicado pela distancia até o endereço, somando taxa de serviço */}
+                            <button className="remove-btn" onClick={() => handleRemoveEndereco(index)}>Remover endereço</button>
                         </div>
                     ))}
                 </div>
