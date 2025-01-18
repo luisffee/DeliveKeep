@@ -24,23 +24,19 @@ function Endereco() {
         cep: '',
     });
 
-    useEffect(() => {
-        const fetchGasolinePrice = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/auth/gasolinePrice');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                const formattedPrice = data.gasoline_price.replace(',', '.');
-                setGasolinePrice(formattedPrice); // valor do preço da gasolina
-            } catch (error) {
-                console.error('Erro ao fazer a requisição:', error);
+    const fetchGasolinePrice = async () => {
+        try {
+            const response = await fetch('http://localhost:5000/auth/gasolinePrice');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
-
-        fetchGasolinePrice();
-    }, []);
+            const data = await response.json();
+            const formattedPrice = data.gasoline_price.replace(',', '.');
+            setGasolinePrice(formattedPrice); // valor do preço da gasolina
+        } catch (error) {
+            console.error('Erro ao fazer a requisição:', error);
+        }
+    };
 
     const fetchCoordinates = async (cep) => {
         try {
@@ -109,6 +105,8 @@ function Endereco() {
             alert('Preencha todos os campos!');
             return;
         }
+
+        await fetchGasolinePrice();
     
         const coords = await fetchCoordinates(cep);
         if (coords) {
