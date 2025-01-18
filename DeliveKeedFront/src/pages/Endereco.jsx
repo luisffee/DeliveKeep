@@ -105,22 +105,28 @@ function Endereco() {
     };
 
     const handleSaveEndereco = async () => {
+        if (!cep || !titulo || !number || !address.rua || !address.bairro) {
+            alert('Preencha todos os campos!');
+            return;
+        }
+    
         const coords = await fetchCoordinates(cep);
         if (coords) {
             const distance = calculateDistance(coords, FURG_COORDS);
-            const multipliedDistance = distance * 2; // Multiplica a distância por 2 (ou outro fator)
-
+            const multipliedDistance = distance * 2;
+    
             const newEndereco = {
                 titulo,
                 rua: address.rua,
                 number,
                 bairro: address.bairro,
-                cep: address.cep,
-                distance: multipliedDistance.toFixed(2), // Formata com 2 casas decimais
+                cep,
+                distance: multipliedDistance.toFixed(2),
             };
-            setEnderecos([...enderecos, newEndereco]);
+    
+            setEnderecos((prevEnderecos) => [...prevEnderecos, newEndereco]);
             setShowModal(false);
-
+    
             // Limpar os campos após salvar
             setCep('');
             setNumber('');
@@ -136,7 +142,7 @@ function Endereco() {
         } else {
             alert('Erro ao buscar coordenadas do endereço.');
         }
-    };
+    };    
 
     const handleRemoveEndereco = (index) => {
         const updatedEnderecos = enderecos.filter((_, i) => i !== index);
@@ -165,7 +171,12 @@ function Endereco() {
                             <p>Bairro: {endereco.bairro}</p>
                             <p>Número: {endereco.number}</p>
                             <p>CEP: {endereco.cep}</p>
-                            <p>Valor: R${(gasolinePrice / 10.5 * endereco.distance + 15).toFixed(2)}</p> {/* Cálculo do valor: preço da gasolina, dividido por km/l de uma van convencional, multiplicado pela distancia até o endereço, somando taxa de serviço */}
+                            <p>
+                                Valor: R$
+                                {gasolinePrice
+                                    ? (gasolinePrice / 10.5 * endereco.distance + 15).toFixed(2)
+                                    : 'Carregando...'}
+                            </p>{/* Cálculo do valor: preço da gasolina, dividido por km/l de uma van convencional, multiplicado pela distancia até o endereço, somando taxa de serviço */}
                             <button className="remove-btn" onClick={() => handleRemoveEndereco(index)}>Remover endereço</button>
                         </div>
                     ))}
@@ -176,13 +187,15 @@ function Endereco() {
                 <div className='modal'>
                     <div className='modal-content'>
                         <h2>Adicionar Endereço</h2>
-                        <input type="number" placeholder="CEP" value={cep} onChange={handleCepChange} required />
-                        <input type="text" placeholder="Rua" value={address.rua} onChange={(e) => setAddress({ ...address, rua: e.target.value })} required />
-                        <input type="text" placeholder="Bairro" value={address.bairro} onChange={(e) => setAddress({ ...address, rua: e.target.value })} required />
-                        <input type="number" placeholder="Número" value={number} onChange={(e) => setNumber(e.target.value)} required />
-                        <input type="text" placeholder="Título" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
-                        <button onClick={handleSaveEndereco}>Salvar</button>
-                        <button onClick={() => setShowModal(false)}>Cancelar</button>
+                        <form action="">
+                            <input type="number" placeholder="CEP" value={cep} onChange={handleCepChange} required />
+                            <input type="text" placeholder="Rua" value={address.rua} onChange={(e) => setAddress({ ...address, rua: e.target.value })} required />
+                            <input type="text" placeholder="Bairro" value={address.bairro} onChange={(e) => setAddress({ ...address, bairro: e.target.value })} required />
+                            <input type="number" placeholder="Número" value={number} onChange={(e) => setNumber(e.target.value)} required />
+                            <input type="text" placeholder="Título" value={titulo} onChange={(e) => setTitulo(e.target.value)} required />
+                            <button type='button' onClick={handleSaveEndereco}>Salvar</button>
+                            <button type='button' onClick={() => setShowModal(false)}>Cancelar</button>
+                        </form>
                     </div>
                 </div>
             )}
