@@ -17,6 +17,7 @@ def create_app(app_config='development'):
     
     from .routes.auth.models import User
     from .routes.deliveries.models import Delivery
+    from .routes.profile.models import Adresses, Payments
     
     with app.app_context():
         db.create_all()
