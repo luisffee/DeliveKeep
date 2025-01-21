@@ -171,6 +171,28 @@ async function getPayments() {
   }
 }
 
+async function addAtendimento(data) {
+  try {
+    const response = await axios.post(`${BASE_API}/profile/addAtendimento`, data);
+    console.log('Atendimento added successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.log('Erro ao adicionar atendimento:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function getAtendimentos() {
+  try {
+    const response = await axios.get(`${BASE_API}/profile/getAtendimentos`);
+    console.log('Atendimentos:', response.data);
+    return response.data.atendimentos; // Return the atendimentos array directly
+  } catch (error) {
+    console.log('Erro ao obter atendimentos:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
 export { 
   registerUser, 
   loginUser, 
@@ -183,5 +205,7 @@ export {
   addPayment, 
   deletePayment, 
   getPayments, 
-  getAdresses
+  getAdresses,
+  getAtendimentos,
+  addAtendimento
 };

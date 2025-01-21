@@ -9,6 +9,7 @@ import Info from './pages/Info.jsx'
 import Endereco from './pages/Endereco.jsx'
 import Pagamento from './pages/Pagamento.jsx'
 import Produtos from './pages/Produtos.jsx'
+import Atendimento from './pages/Atendimento.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/endereco" element={<Endereco />} />
         <Route path="/pagamento" element={<Pagamento />} />
         <Route path="/produtos" element={<Produtos />} />
+        <Route path="/atendimento" element={<Atendimento />} />
       </Routes>
     </Router>
   </StrictMode>,
