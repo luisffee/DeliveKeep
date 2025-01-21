@@ -11,7 +11,7 @@ function Atendimento () {
     const [atendimentos, setAtendimentos] = useState([]);
     const [assunto, setAssunto] = useState('');
     const [email, setEmail] = useState('');
-    const [codigoProduto, setCodigoProduto] = useState('');
+    const [codigoRastreio, setcodigoRastreio] = useState('');
     const [telefone, setTelefone] = useState('');
     const [descricao, setDescricao] = useState('');
 
@@ -38,7 +38,7 @@ function Atendimento () {
     const handleSalveAtendimento = async (e) => {
         e.preventDefault();
 
-        if (!assunto || !email || !codigoProduto || !telefone || !descricao) {
+        if (!assunto || !email || !codigoRastreio || !telefone || !descricao) {
             alert('Por favor, preencha todos os campos corretamente!');
             return;
         }
@@ -56,7 +56,7 @@ function Atendimento () {
         const novoAtendimento = {
             assunto,
             email,
-            codigoProduto,
+            codigoRastreio,
             telefone,
             descricao
         };
@@ -66,7 +66,7 @@ function Atendimento () {
         
         setAssunto('');
         setEmail('');
-        setCodigoProduto('');
+        setcodigoRastreio('');
         setTelefone('');
         setDescricao('');
     
@@ -95,6 +95,19 @@ function Atendimento () {
                         <p>Adicionar Atendimento</p>
                         <img src={addEnderecoBtn} alt='Adicionar Atendimento' />
                     </div>
+                    {atendimentos.map((novoatendimento, index) => (
+                        <div key={index} className='added-produto'>
+                            <div className='img-desc'>
+                                <div className='texto-e-botoes'>
+                                    <p className='descricao-prod'>Assunto: {novoatendimento.assunto}</p>
+                                    <p className='descricao-prod'>E-mail: {novoatendimento.email}</p>
+                                    <p className='descricao-prod'>Código de Rastreio: {novoatendimento.codigoRastreio}</p>
+                                    <p className='descricao-prod'>Telefone: {novoatendimento.telefone}</p>
+                                    <p className='descricao-prod'>Descrição: {novoatendimento.descricao}</p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
@@ -105,7 +118,7 @@ function Atendimento () {
                         <form onSubmit={handleSalveAtendimento}>
                             <input type="text" placeholder="Escolha um assunto" value={assunto} onChange={(e) => setAssunto(e.target.value)} required />
                             <input type='email' placeholder='E-mail' value={email} onChange={(e) => setEmail(e.target.value)} required />
-                            <input type='text' placeholder='Código do produto' value={codigoProduto} onChange={(e) => setCodigoProduto(e.target.value)} required />
+                            <input type='text' placeholder='Código do rastreio' value={codigoRastreio} onChange={(e) => setcodigoRastreio(e.target.value)} required />
                             <input type='text' placeholder='Telefone com (ddd)' value={telefone} onChange={(e) => setTelefone(e.target.value)} required />
                             <textarea placeholder='Descrição' className='desc' value={descricao} onChange={(e) => setDescricao(e.target.value)} required />
 

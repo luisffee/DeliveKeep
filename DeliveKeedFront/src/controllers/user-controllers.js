@@ -193,6 +193,28 @@ async function getAtendimentos() {
   }
 }
 
+async function addProduto(data) {
+  try {
+    const response = await axios.post(`${BASE_API}/delivery/addProduto`, data);
+    console.log('Produto added successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.log('Erro ao adicionar produto:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function getProdutos() {
+  try {
+    const response = await axios.get(`${BASE_API}/delivery/getProdutos`);
+    console.log('Produtos:', response.data);
+    return response.data.produtos; // Return the produtos array directly
+  } catch (error) {
+    console.log('Erro ao obter produtos:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
 export { 
   registerUser, 
   loginUser, 
@@ -207,5 +229,7 @@ export {
   getPayments, 
   getAdresses,
   getAtendimentos,
-  addAtendimento
+  addAtendimento,
+  addProduto,
+  getProdutos
 };

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import LogYou from '../components/LogYou';
 import { Helmet } from 'react-helmet';
 import './Produtos.css';
 import addEnderecoBtn from '../images/addAdress.svg';
 import defaultProdImg from '../images/defaultProd.svg';
+import { addProduto, getProdutos } from '../controllers/user-controllers';
 
 const Produtos = () => {
     const [nomeProduto, setNomeProduto] = useState('');
@@ -14,6 +15,18 @@ const Produtos = () => {
     const [rastreio, setRastreio] = useState('');
     const [produtos, setProdutos] = useState([]);
     const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        const fetchProdutos = async () => {
+            try {
+                const response = await getProdutos();
+                setProdutos(Array.isArray(response) ? response : []);
+            } catch (error) {
+                console.error('Erro ao obter produtos:', error);
+            }
+        };
+        fetchProdutos();
+    }, []);
 
     const handleSalveProduto = async (e) => {
         e.preventDefault(); // Evita o reload da página
@@ -41,6 +54,18 @@ const Produtos = () => {
         setEmail('');
         setTelefone('');
         setRastreio('');
+
+        try {
+                const response = await addProduto(novoProduto);
+                if(response && response.status === 200){
+                    return
+                } else {
+                    alert('Erro ao adicionar pagamento');
+                }
+        
+            } catch (error) {
+                console.error('Erro ao adicionar pagamento:', error);
+        }
     };
 
     const handleRemoveProduto = (index) => {

@@ -47,3 +47,24 @@ class Payments(db.Model):
             'cvv': self.cvv,
             'created_at': self.created_at
         }
+        
+class Atendimentos(db.Model):
+    __tablename__ = 'atendimentos'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    assunto = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    codigoRastreio = db.Column(db.String(16), db.ForeignKey('delivery.rastreio'))
+    telefone = db.Column(db.String(15), nullable=False)
+    descricao = db.Column(db.String(255), nullable=False)
+    
+    def serialize(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'assunto': self.assunto,
+            'email': self.email,
+            'codigoRastreio': self.codigoRastreio,
+            'telefone': self.telefone,
+            'descricao': self.descricao
+        }

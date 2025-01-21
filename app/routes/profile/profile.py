@@ -3,7 +3,8 @@ from ..auth.models import User
 from ...db import db
 from ..auth.auth import token_required
 
-from .models import Adresses, Payments
+from .models import Adresses, Payments, Atendimentos
+from ..deliveries.models import Delivery
 
 profile_bp = Blueprint('profile', __name__)
 
@@ -127,3 +128,37 @@ def getPayments(current_user):
             return jsonify({'message': 'User not found'}), 404
         payments = Payments.query.filter_by(user_id=user_id).all()
         return jsonify({'payments': [payment.serialize() for payment in payments]}), 200
+    
+@profile_bp.route('/addAtendimento', methods=['POST'])
+@token_required
+def addAtendimento(current_user):
+    if request.method == 'POST':
+        data = request.get_json()
+        user_id = current_user.id
+        assunto = data.get('assunto')
+        email = data.get('email')
+        codigoRastreio = data.get('codigoRastreio')
+        telefone = data.get('telefone')
+        descricao = data.get('descricao')
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+        if codigoRastreio:
+            delivery = Delivery.query.filter_by(rastreio=codigoRastreio).first()
+            if not delivery:
+                return jsonify({'message': 'Delivery not found'}), 404
+        new_atendimento = Atendimentos(user_id=user_id, assunto=assunto, email=email, codigoRastreio=codigoRastreio, telefone=telefone, descricao=descricao)
+        db.session.add(new_atendimento)
+        db.session.commit()
+        return jsonify({'message': 'Atendimento added successfully', 'status':'200'}), 200
+    
+@profile_bp.route('/getAtendimentos', methods=['GET'])
+@token_required
+def getAtendimentos(current_user):
+    if request.method == 'GET':
+        user_id = current_user.id
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+        atendimentos = Atendimentos.query.filter_by(user_id=user_id).all()
+        return jsonify({'atendimentos': [atendimento.serialize() for atendimento in atendimentos]}), 200

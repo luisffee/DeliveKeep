@@ -38,6 +38,9 @@ const LogYou = () => {
   const handleProductClick = () => {
     window.location.href = '/produtos';
   }
+  const handleAtendimentoClick = () => {
+    window.location.href = '/atendimento';
+  }
 
   const token = localStorage.getItem('authToken');
 
@@ -82,7 +85,7 @@ const LogYou = () => {
           <li style={{ padding: "8px 12px", cursor: "pointer" }}>Meus Dados</li>
           <li onClick={handlePaymentClick} style={{ padding: "8px 12px", cursor: "pointer" }}>Carteira</li>
           <li onClick={handleProductClick} style={{ padding: "8px 12px", cursor: "pointer" }}>Meus Produtos</li>
-          <li style={{ padding: "8px 12px", cursor: "pointer" }}>Atendimentos</li>
+          <li onClick={handleAtendimentoClick} style={{ padding: "8px 12px", cursor: "pointer" }}>Atendimentos</li>
         </ul>
       )}
       <div className="textLogYou" onClick={handleHomeClick}>
