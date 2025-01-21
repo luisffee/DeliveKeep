@@ -70,21 +70,32 @@ def deleteAdress(current_user):
         db.session.commit()
         return jsonify({'message': 'Address deleted successfully', 'status':'200'}), 200
     
+@profile_bp.route('/getAdresses', methods=['GET'])
+@token_required
+def getAdresses(current_user):
+    if request.method == 'GET':
+        user_id = current_user.id
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+        adresses = Adresses.query.filter_by(user_id=user_id).all()
+        return jsonify({'adresses': [address.serialize() for address in adresses]}), 200
+    
 @profile_bp.route('/addPayment', methods=['POST'])
 @token_required
 def addPayment(current_user):
     if request.method == 'POST':
         data = request.get_json()
         user_id = current_user.id
-        card_name = data.get('card_name')
-        card_number = data.get('card_number')
-        card_holder = data.get('card_holder')
-        expiration_date = data.get('expiration_date')
+        titulo = data.get('titulo')
+        numeroCartao = data.get('numeroCartao')
+        nomeTitular = data.get('nomeTitular')
+        validade = data.get('validade')
         cvv = data.get('cvv')
         user = User.query.filter_by(id=user_id).first()
         if not user:
             return jsonify({'message': 'User not found'}), 404
-        new_payment = Payments(user_id=user_id, card_name=card_name, card_number=card_number, card_holder=card_holder, expiration_date=expiration_date, cvv=cvv)
+        new_payment = Payments(user_id=user_id, titulo=titulo, numeroCartao=numeroCartao, nomeTitular=nomeTitular, validade=validade, cvv=cvv)
         db.session.add(new_payment)
         db.session.commit()
         return jsonify({'message': 'Payment added successfully', 'status':'200'}), 200
@@ -95,13 +106,24 @@ def deletePayment(current_user):
     if request.method == 'POST':
         data = request.get_json()
         user_id = current_user.id
-        payment_id = data.get('payment_id')
+        titulo = data.get('titulo')
         user = User.query.filter_by(id=user_id).first()
         if not user:
             return jsonify({'message': 'User not found'}), 404
-        payment = Payments.query.filter_by(id=payment_id).first()
+        payment = Payments.query.filter_by(titulo=titulo).first()
         if not payment:
             return jsonify({'message': 'Payment not found'}), 404
         db.session.delete(payment)
         db.session.commit()
         return jsonify({'message': 'Payment deleted successfully', 'status':'200'}), 200
+
+@profile_bp.route('/getPayments', methods=['GET'])
+@token_required
+def getPayments(current_user):
+    if request.method == 'GET':
+        user_id = current_user.id
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return jsonify({'message': 'User not found'}), 404
+        payments = Payments.query.filter_by(user_id=user_id).all()
+        return jsonify({'payments': [payment.serialize() for payment in payments]}), 200

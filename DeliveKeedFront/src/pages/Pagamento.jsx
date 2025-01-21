@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import LogYou from '../components/LogYou';
 import { Helmet } from 'react-helmet';
 import addEnderecoBtn from '../images/addAdress.svg';
 import './Pagamento.css';
+import { addPayment, deletePayment, getPayments } from '../controllers/user-controllers';
 
 function Pagamento () {
     const [showModal, setShowModal] = useState(false);
@@ -14,22 +15,41 @@ function Pagamento () {
     const [nickname, setNickname] = useState('');
     const [cardholderName, setCardholderName] = useState('');
 
+    useEffect(() => {
+        const fetchPagamentos = async () => {
+            try {
+                const response = await getPayments();
+                setPagamentos(Array.isArray(response) ? response : []); // Ensure pagamentos is an array
+            } catch (error) {
+                console.error('Erro ao obter pagamentos:', error);
+            }
+        };
+        fetchPagamentos();
+    }, []);
+
     const handleCardNumberChange = (e) => {
-        let value = e.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-        value = value.slice(0, 16); // Limita a 16 dígitos
-
-        // Adiciona um espaço a cada 4 dígitos
-        const formattedValue = value.replace(/(.{4})/g, '$1 ').trim();
-
-        setCardNumber(formattedValue);
+        let value = e.target.value.replace(/\D/g, ''); // Remove all non-numeric characters
+        value = value.slice(0, 16); // Limit to 16 digits
+        setCardNumber(value);
     };
 
-    const handleRemovePagamento = (index) => {
+    const handleRemovePagamento = async (index) => {
         const updatedPagamento = pagamentos.filter((_, i) => i !== index);
         setPagamentos(updatedPagamento);
+        try {
+            const response = await deletePayment({ titulo: pagamentos[index].titulo });
+            if(response && response.status === 200){
+                return
+            } else {
+                alert('Erro ao remover pagamento');
+            }
+
+        } catch (error) {
+            console.error('Erro ao remover pagamento:', error);
+        }
     };
 
-    const handleSalveCartão = (e) => {
+    const handleSalveCartão = async (e) => {
         e.preventDefault(); // Evita o reload da página
         
         // Validações simples antes de salvar (opcional)
@@ -55,6 +75,18 @@ function Pagamento () {
         setCardholderName('');
         setValidity('');
         setCvv('');
+
+        try {
+                const response = await addPayment(novoPagamento);
+                if(response && response.status === 200){
+                    return
+                } else {
+                    alert('Erro ao adicionar pagamento');
+                }
+        
+            } catch (error) {
+                console.error('Erro ao adicionar pagamento:', error);
+        }
     };
     
     const handleValidityChange = (e) => {
@@ -112,6 +144,7 @@ function Pagamento () {
             </Helmet>
             <Header />
             <LogYou />
+            
 
             <div className='pagamento-wrapper'>
                 <div className='big-box'>
@@ -122,7 +155,7 @@ function Pagamento () {
                     {pagamentos.map((novoPagamento, index) => (
                         <div key={index} className='add-pagamento'>
                             <p>{novoPagamento.titulo}</p>
-                            <p>Número: **** **** **** {novoPagamento.numeroCartao.slice(-4)}</p>
+                            <p>Número: **** **** **** {novoPagamento.numeroCartao ? novoPagamento.numeroCartao.slice(-4) : '****'}</p>
                             <p>Nome: {novoPagamento.nomeTitular}</p>
                             <p>Validade: {novoPagamento.validade}</p>
                             <p>CVV: ***</p>

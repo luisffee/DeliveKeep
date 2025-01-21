@@ -127,6 +127,17 @@ async function deleteAdress(data) {
   }
 }
 
+async function getAdresses() {
+  try {
+    const response = await axios.get(`${BASE_API}/profile/getAdresses`);
+    console.log('Adresses:', response.data);
+    return response.data.adresses; // Return the adresses array directly
+  } catch (error) {
+    console.log('Erro ao obter endereços:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
 async function addPayment(data) {
   try {
     const response = await axios.post(`${BASE_API}/profile/addPayment`, data);
@@ -140,11 +151,22 @@ async function addPayment(data) {
 
 async function deletePayment(data) {
   try {
-    const response = await axios.delete(`${BASE_API}/profile/deletePayment`, data);
+    const response = await axios.post(`${BASE_API}/profile/deletePayment`, data);
     console.log('Payment deleted successfully:', response.data);
     return response;
   } catch (error) {
     console.log('Erro ao deletar pagamento:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function getPayments() {
+  try {
+    const response = await axios.get(`${BASE_API}/profile/getPayments`);
+    console.log('Payments:', response.data);
+    return response.data.payments; // Return the payments array directly
+  } catch (error) {
+    console.log('Erro ao obter pagamentos:', error.response?.data || error.message);
     throw error;
   }
 }
@@ -159,5 +181,7 @@ export {
   addAdress, 
   deleteAdress, 
   addPayment, 
-  deletePayment 
+  deletePayment, 
+  getPayments, 
+  getAdresses
 };

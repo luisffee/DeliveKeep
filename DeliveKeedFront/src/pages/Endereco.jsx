@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import LogYou from '../components/LogYou';
 import { Helmet } from 'react-helmet';
 import './Endereco.css';
 import addEnderecoBtn from '../images/addAdress.svg';
 import API_GMAPS_KEY from './api';
-import { addAdress, deleteAdress } from '../controllers/user-controllers';
+import { addAdress, deleteAdress, getAdresses } from '../controllers/user-controllers';
 
 const FURG_COORDS = { lat: -32.066157, lng: -52.175553 }; // Coordenadas da FURG
 
@@ -24,6 +24,18 @@ function Endereco() {
         estado: '',
         cep: '',
     });
+
+    useEffect(() => {
+        const fetchAdresses = async () => {
+            try {
+                const response = await getAdresses();
+                setEnderecos(Array.isArray(response) ? response : []); // Ensure pagamentos is an array
+            } catch (error) {
+                console.error('Erro ao obter pagamentos:', error);
+            }
+        };
+        fetchAdresses();
+    }, []);
 
     const fetchGasolinePrice = async () => {
         try {

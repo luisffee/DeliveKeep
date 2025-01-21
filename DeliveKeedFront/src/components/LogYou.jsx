@@ -31,6 +31,10 @@ const LogYou = () => {
     window.location.href = '/endereco';
   }
 
+  const handlePaymentClick = () => {
+    window.location.href = '/pagamento';
+  }
+
   const token = localStorage.getItem('authToken');
 
   const dropDownMenu = () => {
@@ -72,7 +76,7 @@ const LogYou = () => {
         >
           <li onClick={handleEnderecoClick} style={{ padding: "8px 12px", cursor: "pointer" }}>Meus Endereços</li>
           <li style={{ padding: "8px 12px", cursor: "pointer" }}>Meus Dados</li>
-          <li style={{ padding: "8px 12px", cursor: "pointer" }}>Carteira</li>
+          <li onClick={handlePaymentClick} style={{ padding: "8px 12px", cursor: "pointer" }}>Carteira</li>
           <li style={{ padding: "8px 12px", cursor: "pointer" }}>Meus Produtos</li>
           <li style={{ padding: "8px 12px", cursor: "pointer" }}>Atendimentos</li>
         </ul>
