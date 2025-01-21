@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Header from '../components/Header';
 import LogYou from '../components/LogYou';
 import { Helmet } from 'react-helmet';
 import './Endereco.css';
 import addEnderecoBtn from '../images/addAdress.svg';
 import API_GMAPS_KEY from './api';
+import { addAdress, deleteAdress } from '../controllers/user-controllers';
 
 const FURG_COORDS = { lat: -32.066157, lng: -52.175553 }; // Coordenadas da FURG
 
@@ -137,15 +138,39 @@ function Endereco() {
                 estado: '',
                 cep: '',
             });
+
+            try {
+                const response = await addAdress(newEndereco);
+                if(response && response.status === 200){
+                    return
+                } else {
+                    alert('Erro ao adicionar endereço');
+                }
+        
+            } catch (error) {
+                console.error('Erro ao adicionar endereço:', error);
+            }
+
         } else {
             alert('Erro ao buscar coordenadas do endereço.');
         }
     };    
 
-    const handleRemoveEndereco = (index) => {
+    const handleRemoveEndereco = async (index) => {
         const updatedEnderecos = enderecos.filter((_, i) => i !== index);
         setEnderecos(updatedEnderecos);
-    };    
+        try {
+            const response = await deleteAdress({ titulo: enderecos[index].titulo });
+            if(response && response.status === 200){
+                return
+            } else {
+                alert('Erro ao remover endereço');
+            }
+
+        } catch (error) {
+            console.error('Erro ao remover endereço:', error);
+        }
+    };  
 
     return (
         <div id="endereco-page">

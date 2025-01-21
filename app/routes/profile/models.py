@@ -4,7 +4,12 @@ class Adresses(db.Model):
     __tablename__ = 'adresses'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    address = db.Column(db.String(255), nullable=False)
+    titulo = db.Column(db.String(255), nullable=False, unique=True)
+    rua = db.Column(db.String(255), nullable=False)
+    number = db.Column(db.String(10), nullable=False)
+    bairro = db.Column(db.String(255), nullable=False)
+    cep = db.Column(db.String(8), nullable=False)
+    distance = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.Date)
     
 class Payments(db.Model):

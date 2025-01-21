@@ -21,7 +21,7 @@ def profile(current_user):
 def editProfile(current_user):
     if request.method == 'POST':
         data = request.get_json()
-        user_id = data.get('user_id')
+        user_id = current_user.id
         user = User.query.filter_by(id=user_id).first()
         if not user:
             return jsonify({'message': 'User not found'}), 404
@@ -31,46 +31,51 @@ def editProfile(current_user):
         user.numberContact = data.get('numberContact')
         user.date_of_birth = data.get('date_of_birth')
         db.session.commit()
-        return jsonify({'message': 'User updated successfully'}), 200
+        return jsonify({'message': 'User updated successfully', 'status':'200'}), 200
 
 @profile_bp.route('/addAdress', methods=['POST'])
 @token_required
 def addAdress(current_user):
     if request.method == 'POST':
         data = request.get_json()
-        user_id = data.get('user_id')
-        address = data.get('address')
+        user_id = current_user.id
+        titulo = data.get('titulo')
+        rua = data.get('rua')
+        number = data.get('number')
+        bairro = data.get('bairro')
+        cep = data.get('cep')
+        distance = data.get('distance')
         user = User.query.filter_by(id=user_id).first()
         if not user:
             return jsonify({'message': 'User not found'}), 404
-        new_address = Adresses(user_id=user_id, address=address)
+        new_address = Adresses(user_id=user_id, titulo=titulo, rua=rua, number=number, bairro=bairro, cep=cep, distance=distance)
         db.session.add(new_address)
         db.session.commit()
-        return jsonify({'message': 'Address added successfully'}), 200
+        return jsonify({'message': 'Address added successfully', 'status':'200'}), 200
 
 @profile_bp.route('/deleteAdress', methods=['POST'])
 @token_required
 def deleteAdress(current_user):
     if request.method == 'POST':
         data = request.get_json()
-        user_id = data.get('user_id')
-        address_id = data.get('address_id')
+        user_id = current_user.id
+        titulo = data.get('titulo')
         user = User.query.filter_by(id=user_id).first()
         if not user:
             return jsonify({'message': 'User not found'}), 404
-        address = Adresses.query.filter_by(id=address_id).first()
+        address = Adresses.query.filter_by(titulo=titulo).first()
         if not address:
             return jsonify({'message': 'Address not found'}), 404
         db.session.delete(address)
         db.session.commit()
-        return jsonify({'message': 'Address deleted successfully'}), 200
+        return jsonify({'message': 'Address deleted successfully', 'status':'200'}), 200
     
 @profile_bp.route('/addPayment', methods=['POST'])
 @token_required
 def addPayment(current_user):
     if request.method == 'POST':
         data = request.get_json()
-        user_id = data.get('user_id')
+        user_id = current_user.id
         card_name = data.get('card_name')
         card_number = data.get('card_number')
         card_holder = data.get('card_holder')
@@ -82,14 +87,14 @@ def addPayment(current_user):
         new_payment = Payments(user_id=user_id, card_name=card_name, card_number=card_number, card_holder=card_holder, expiration_date=expiration_date, cvv=cvv)
         db.session.add(new_payment)
         db.session.commit()
-        return jsonify({'message': 'Payment added successfully'}), 200
+        return jsonify({'message': 'Payment added successfully', 'status':'200'}), 200
     
 @profile_bp.route('/deletePayment', methods=['POST'])
 @token_required
 def deletePayment(current_user):
     if request.method == 'POST':
         data = request.get_json()
-        user_id = data.get('user_id')
+        user_id = current_user.id
         payment_id = data.get('payment_id')
         user = User.query.filter_by(id=user_id).first()
         if not user:
@@ -99,4 +104,4 @@ def deletePayment(current_user):
             return jsonify({'message': 'Payment not found'}), 404
         db.session.delete(payment)
         db.session.commit()
-        return jsonify({'message': 'Payment deleted successfully'}), 200
+        return jsonify({'message': 'Payment deleted successfully', 'status':'200'}), 200

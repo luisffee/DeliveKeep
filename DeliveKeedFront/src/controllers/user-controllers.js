@@ -83,4 +83,81 @@ async function getUserInfo(info) {
   }
 }
 
-export { registerUser, loginUser, logoutUser, getUserInfo };
+async function getProfile() {
+  try {
+    const response = await axios.get(`${BASE_API}/profile/getProfile`);
+    console.log('User Info:', response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Erro ao obter informações do usuário:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function editProfile(data) {
+  try {
+    const response = await axios.put(`${BASE_API}/profile/editProfile`, data);
+    console.log('User updated successfully:', response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Erro ao atualizar usuário:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function addAdress(data) {
+  try {
+    const response = await axios.post(`${BASE_API}/profile/addAdress`, data);
+    console.log('Adress added successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.log('Erro ao adicionar endereço:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function deleteAdress(data) {
+  try {
+    const response = await axios.post(`${BASE_API}/profile/deleteAdress`, data);
+    console.log('Adress deleted successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.log('Erro ao deletar endereço:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function addPayment(data) {
+  try {
+    const response = await axios.post(`${BASE_API}/profile/addPayment`, data);
+    console.log('Payment added successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.log('Erro ao adicionar pagamento:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+async function deletePayment(data) {
+  try {
+    const response = await axios.delete(`${BASE_API}/profile/deletePayment`, data);
+    console.log('Payment deleted successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.log('Erro ao deletar pagamento:', error.response?.data || error.message);
+    throw error;
+  }
+}
+
+export { 
+  registerUser, 
+  loginUser, 
+  logoutUser, 
+  getUserInfo, 
+  editProfile, 
+  getProfile, 
+  addAdress, 
+  deleteAdress, 
+  addPayment, 
+  deletePayment 
+};
